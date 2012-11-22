@@ -1,31 +1,55 @@
-# i18n YML Format Converter #
+# Translation Process #
 
 ## Overview ##
 
-Converts SilverStripe's language files from a PHP array (the `$lang` global)
-to a YML file adhereing to the Rails 2.2 i18n conventions.
-This allows us to import the files into getlocalization.com,
-and export the translations from there again.
+SilverStripe contains language files for user-facing strings (see [i18n](/topics/i18n)).
+These are stored in YML format, which is fairly readable,
+but also sensitive to whitespace and formatting changes,
+so not ideally suited for non-technical editors.
 
-Also normalizes the locale names a bit,
-in anticipation of allowing translation fallbacks
-in SS3 through the `Zend_Translate` framework.
-For example, 'en_US.php' becomes 'en.yml'.
+Note: Until SilverStripe 3.0, we used a PHP storage format.
+This format is now deprecated, and we don't provide tools
+for editing the files. Please see below for information on
+how to convert these legacy files and existing translations to YML.
 
-Removes duplicate translations, and moves outdated
-translations between sapphire and cms.
+## Collecting translatable text ##
 
-## Maintainers ##
+As a first step, you can automatically collect
+all translatable text in your module through the `i18nTextCollector` task.
+See [i18n](/topics/i18n#collecting-text) for more details.
 
- * Ingo Schommer (ingo at silverstripe dot com)
+## 
 
-## Usage ##
+### 1. Convert lang files from PHP to YML
 
 All modules: `sake dev/tasks/i18nYMLConverterTask`
 Single module: `sake dev/tasks/i18nYMLConverterTask module=<mymodule>`
 	
-By default, the newly created 
+### 2. Create getlocalization.com account
 
-## TODO ##
 
- * Write custom Zend_Translate backend to deal with the YML files in SilverStripe
+
+### 3. Import master files
+
+On the "Files" tab, you can choose "Import from SCM",
+and connect getlocalization to your github account.
+Alternatively, upload the `en.yml` file in the "Ruby on Rails" format.
+
+### 4. Import translations
+
+While you can do this through the UI, it can get a bit tedious
+uploading 50+ files.
+
+
+
+## Conversion from 2.4 PHP format
+
+The conversion from PHP format to YML is taken care of by a module
+called [i18n_yml_converter](https://github.com/chillu/i18n_yml_converter).
+
+## Contact
+
+Translators have their own [mailinglist](https://groups.google.com/forum/#!forum/silverstripe-translators),
+but you can also reach a core member on [IRC](http://silverstripe.org/irc).
+The getlocalization.com interface has a built-in discussion board if
+you have specific comments on a translation.
